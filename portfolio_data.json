@@ -1,0 +1,119 @@
+{
+  "developer": {
+    "name": "Nishan Bhurtel",
+    "alias": "Daii",
+    "role": "ML/AI Student | Full-Stack Developer | Data Science Enthusiast",
+    "github": "https://github.com/NishanBhurtel",
+    "summary": "Passionate about building AI/ML-powered applications and full-stack web solutions. Strong foundation in machine learning, data science, and modern web technologies."
+  },
+  "skills": {
+    "programming": ["Python", "JavaScript", "C"],
+    "frontend": ["React", "HTML", "CSS", "Tailwind CSS"],
+    "backend": ["Node.js", "Express"],
+    "databases": ["MongoDB", "PostgreSQL"],
+    "ml_ai": ["TensorFlow", "Keras", "Scikit-Learn", "Pandas", "Numpy"],
+    "tools": ["Git", "GitHub", "VS Code"],
+    "expertise_areas": ["Machine Learning", "Deep Learning", "Data Analysis", "Full-Stack Web Development", "Recommendation Systems"]
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "SmartLeaf",
+      "subtitle": "Plant Disease Detection using CNN",
+      "description": "An intelligent computer vision application that identifies plant diseases using Convolutional Neural Networks. Users can upload plant leaf images and receive disease classification with confidence scores and treatment recommendations.",
+      "type": "ML/AI Project",
+      "tech_stack": ["Python", "TensorFlow", "Keras", "CNN", "OpenCV", "Flask"],
+      "features": [
+        "Real-time plant disease classification",
+        "Image upload and processing",
+        "Confidence scores for predictions",
+        "Disease treatment recommendations",
+        "Dataset training with high accuracy"
+      ],
+      "impact": "Helps farmers and gardeners identify crop diseases early, reducing losses and improving yields.",
+      "status": "Completed",
+      "key_learning": "Deep learning, computer vision, model optimization"
+    },
+    {
+      "id": 2,
+      "name": "BreatheEasy",
+      "subtitle": "Air Pollution & Health Assistant App",
+      "description": "A comprehensive full-stack application that monitors real-time air quality data, provides health alerts, and offers personalized recommendations. Integrates weather APIs and health databases to help users make informed decisions.",
+      "type": "Full-Stack Web App + Data Science",
+      "tech_stack": ["React", "Node.js", "Express", "MongoDB", "Pandas", "APIs"],
+      "features": [
+        "Real-time air quality monitoring",
+        "Health alerts based on pollution levels",
+        "Personalized health recommendations",
+        "Weather integration",
+        "Data visualization and analytics",
+        "User authentication"
+      ],
+      "impact": "Helps users understand air quality impacts on health and take preventive measures.",
+      "status": "Completed",
+      "key_learning": "Full-stack development, real-time data processing, API integration"
+    },
+    {
+      "id": 3,
+      "name": "Student Management System",
+      "subtitle": "Full-Stack Web Application",
+      "description": "A robust student management platform for educational institutions. Features include student registration, grade tracking, attendance management, and analytics dashboard for administrators.",
+      "type": "Full-Stack Web App",
+      "tech_stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+      "features": [
+        "Student registration and profile management",
+        "Grade and assignment tracking",
+        "Attendance management",
+        "Admin dashboard with analytics",
+        "Role-based access control",
+        "Responsive UI"
+      ],
+      "impact": "Streamlines student and academic data management for institutions.",
+      "status": "Completed",
+      "key_learning": "Full-stack architecture, database design, user authentication, CRUD operations"
+    },
+    {
+      "id": 4,
+      "name": "Movie Recommendation System",
+      "subtitle": "Sentiment Analysis + Machine Learning",
+      "description": "An intelligent recommendation engine that suggests movies based on user preferences, ratings, and sentiment analysis of reviews. Uses collaborative filtering and content-based filtering combined with NLP for review analysis.",
+      "type": "ML/AI + Data Science Project",
+      "tech_stack": ["Python", "Scikit-Learn", "Pandas", "NLP", "Flask", "SQLite"],
+      "features": [
+        "User-based and item-based collaborative filtering",
+        "Sentiment analysis of movie reviews",
+        "Personalized movie recommendations",
+        "Rating prediction",
+        "Review text analysis",
+        "Web interface"
+      ],
+      "impact": "Provides users with accurate movie recommendations based on their preferences and community feedback.",
+      "status": "Completed",
+      "key_learning": "Recommendation algorithms, NLP, sentiment analysis, data preprocessing"
+    },
+    {
+      "id": 5,
+      "name": "Smart Grocery AI",
+      "subtitle": "Hybrid Recommendation System",
+      "description": "An advanced grocery shopping assistant combining multiple recommendation strategies (collaborative filtering, content-based, and hybrid approaches). Personalizes shopping lists and suggests products based on user behavior and preferences.",
+      "type": "ML/AI + Full-Stack Project",
+      "tech_stack": ["Python", "Scikit-Learn", "Pandas", "React", "Node.js", "PostgreSQL"],
+      "features": [
+        "Hybrid recommendation algorithms",
+        "Personalized shopping list generation",
+        "Product similarity matching",
+        "User preference learning",
+        "Purchase history analysis",
+        "Price optimization suggestions"
+      ],
+      "impact": "Enhances shopping experience with intelligent recommendations and saves users time and money.",
+      "status": "Completed",
+      "key_learning": "Hybrid recommendation systems, data analysis, user behavior modeling"
+    }
+  ],
+  "experience": {
+    "current_focus": "Building ML/AI applications and expanding full-stack development skills",
+    "learning_path": "Advanced deep learning, NLP, cloud deployment, system design",
+    "career_interests": ["Machine Learning Engineer", "Data Scientist", "Full-Stack Developer", "AI Research"]
+  }
+}

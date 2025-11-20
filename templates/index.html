@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHubProfileBot - Portfolio Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 700px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: slideIn 0.3s ease-in;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message.bot {
+            justify-content: flex-start;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+        
+        .user .message-content {
+            background: #667eea;
+            color: white;
+            border-radius: 18px 18px 5px 18px;
+        }
+        
+        .bot .message-content {
+            background: #e9ecef;
+            color: #333;
+            border-radius: 18px 18px 18px 5px;
+        }
+        
+        .bot .message-content a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .bot .message-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .bot .message-content strong {
+            color: #764ba2;
+        }
+        
+        .input-area {
+            border-top: 1px solid #ddd;
+            padding: 15px;
+            background: white;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-group {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+        }
+        
+        #query {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        #query:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 10px;
+            color: #667eea;
+            display: none;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .suggestion-btn {
+            padding: 10px 15px;
+            background: #e9ecef;
+            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        
+        .suggestion-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        @media (max-width: 600px) {
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .container {
+                max-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 GitHubProfileBot</h1>
+            <p>AI-powered portfolio assistant <span id="botType" style="font-size: 12px; opacity: 0.8;"></span></p>
+        </div>
+        
+        <div class="chat-box" id="chatBox">
+            <div class="message bot">
+                <div class="message-content">
+                    Welcome! I'm **GitHubProfileBot**, your AI assistant for Nishan Bhurtel's portfolio. 
+                    
+                    Ask me about:
+                    • Projects & tech stack
+                    • Skills & expertise
+                    • Learning roadmaps
+                    • Career interests
+                    • And much more!
+                </div>
+            </div>
+            
+            <div class="suggestions" style="margin-top: 20px;">
+                <button class="suggestion-btn" onclick="sendMessage('Tell me about yourself')">👤 About You</button>
+                <button class="suggestion-btn" onclick="sendMessage('Show me all projects')">🚀 Projects</button>
+                <button class="suggestion-btn" onclick="sendMessage('What skills do you have?')">🛠️ Skills</button>
+                <button class="suggestion-btn" onclick="sendMessage('Machine learning roadmap')">🎓 ML Roadmap</button>
+                <button class="suggestion-btn" onclick="sendMessage('Pitch to recruiter')">💼 Recruiter Pitch</button>
+                <button class="suggestion-btn" onclick="sendMessage('New project ideas')">💡 Ideas</button>
+            </div>
+        </div>
+        
+        <div class="input-area">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="query" 
+                    placeholder="Ask me anything..."
+                    onkeypress="if(event.key==='Enter') sendMessage()"
+                >
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const chatBox = document.getElementById('chatBox');
+        const queryInput = document.getElementById('query');
+        const loading = document.getElementById('loading');
+        const botTypeElement = document.getElementById('botType');
+        
+        // Detect bot type on load
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: 'What is your name?' })
+        })
+        .then(r => r.json())
+        .then(d => {
+            if (d.bot_type === 'claude') {
+                botTypeElement.textContent = '(Powered by Claude 3.5)';
+            } else {
+                botTypeElement.textContent = '(Rule-based)';
+            }
+        })
+        .catch(() => {
+            botTypeElement.textContent = '(Ready)';
+        });
+        
+        function sendMessage(text = null) {
+            const query = text || queryInput.value.trim();
+            
+            if (!query) return;
+            
+            // Add user message
+            addMessage(query, 'user');
+            queryInput.value = '';
+            
+            // Show loading
+            loading.style.display = 'block';
+            
+            // Send to backend
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                if (data.success) {
+                    addMessage(data.response, 'bot');
+                } else {
+                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                addMessage('Connection error. Please try again.', 'bot');
+                console.error('Error:', error);
+            });
+        }
+        
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            // Convert markdown-like formatting
+            text = text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n/g, '<br>');
+            
+            contentDiv.innerHTML = text;
+            messageDiv.appendChild(contentDiv);
+            chatBox.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            setTimeout(() => {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 100);
+        }
+        
+        // Focus on input
+        queryInput.focus();
+    </script>
+</body>
+</html>
